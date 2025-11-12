@@ -1,0 +1,52 @@
+{
+  "name": "image-preview",
+  "displayName": "Image Preview",
+  "description": "Preview images on hover over image URLs",
+  "version": "1.0.0",
+  "publisher": "image-preview",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/image-preview"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Image Preview",
+      "properties": {
+        "imagePreview.maxWidth": {
+          "type": "number",
+          "default": 400,
+          "description": "Maximum width of the preview image in pixels"
+        },
+        "imagePreview.maxHeight": {
+          "type": "number",
+          "default": 400,
+          "description": "Maximum height of the preview image in pixels"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.x",
+    "@typescript-eslint/parser": "^6.x",
+    "eslint": "^8.x",
+    "typescript": "^5.3.0"
+  }
+}

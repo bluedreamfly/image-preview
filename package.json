@@ -2,7 +2,7 @@
   "name": "image-preview",
   "displayName": "Image Preview",
   "description": "Preview images on hover over image URLs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "image-preview",
   "repository": {
     "type": "git",
@@ -31,9 +31,20 @@
           "type": "number",
           "default": 400,
           "description": "Maximum height of the preview image in pixels"
+        },
+        "imagePreview.assetMappingPath": {
+          "type": "string",
+          "default": "",
+          "description": "Custom path to asset mapping configuration file (relative to workspace root)"
         }
       }
-    }
+    },
+    "commands": [
+      {
+        "command": "imagePreview.reloadAssets",
+        "title": "Image Preview: Reload Asset Mappings"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

@@ -29,8 +29,8 @@ export class ImageHoverProvider implements vscode.HoverProvider {
         if (assetRange) {
             const assetId = document.getText(assetRange);
 
-            // 在显示 hover 前检查是否需要刷新资源映射
-            await this.assetResolver.checkAndRefreshIfNeeded();
+            // 在显示 hover 前检查是否需要刷新资源映射（传递文档URI以支持多工作区）
+            await this.assetResolver.checkAndRefreshIfNeeded(document.uri);
 
             return this.createAssetHover(assetId, document);
         }
@@ -46,8 +46,8 @@ export class ImageHoverProvider implements vscode.HoverProvider {
             // 先检查是否为资源标识符
             const assetId = this.findAssetIdAtPosition(lineText, position.character);
             if (assetId) {
-                // 在显示 hover 前检查是否需要刷新资源映射
-                await this.assetResolver.checkAndRefreshIfNeeded();
+                // 在显示 hover 前检查是否需要刷新资源映射（传递文档URI以支持多工作区）
+                await this.assetResolver.checkAndRefreshIfNeeded(document.uri);
 
                 return this.createAssetHover(assetId, document);
             }
@@ -133,8 +133,8 @@ export class ImageHoverProvider implements vscode.HoverProvider {
     }
 
     private createAssetHover(assetId: string, document: vscode.TextDocument): vscode.Hover | null {
-        // 从资源解析器获取图片URL
-        const imageUrl = this.assetResolver.resolveAsset(assetId);
+        // 从资源解析器获取图片URL，传入文档URI以支持多工作区
+        const imageUrl = this.assetResolver.resolveAsset(assetId, document.uri);
 
         if (!imageUrl) {
             // 如果找不到映射，返回提示信息

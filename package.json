@@ -36,6 +36,36 @@
           "type": "string",
           "default": "",
           "description": "Custom path to asset mapping configuration file (relative to workspace root)"
+        },
+        "imagePreview.assetApiUrl": {
+          "type": "string",
+          "default": "",
+          "description": "API URL to fetch asset mappings (JSON format). If provided, it will be loaded in addition to local files. Activity ID will be sent in x-activity-id header."
+        },
+        "imagePreview.activityIdFile": {
+          "type": "string",
+          "default": ".activityId",
+          "description": "File name in project root that contains the activity ID (default: .activityId). The value will be sent as x-activity-id header in API requests."
+        },
+        "imagePreview.apiTimeout": {
+          "type": "number",
+          "default": 5000,
+          "description": "Timeout for API requests in milliseconds"
+        },
+        "imagePreview.autoRefreshInterval": {
+          "type": "number",
+          "default": 60000,
+          "description": "Auto-refresh interval for API asset mappings in milliseconds (0 to disable, default: 60000 = 1 minute)"
+        },
+        "imagePreview.showRefreshNotification": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show notification when asset mappings are auto-refreshed"
+        },
+        "imagePreview.refreshOnHoverThreshold": {
+          "type": "number",
+          "default": 300000,
+          "description": "Auto-refresh when hovering over assets if last update was more than N milliseconds ago (default: 300000 = 5 minutes, 0 to disable)"
         }
       }
     },
@@ -53,11 +83,15 @@
     "lint": "eslint src --ext ts"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.4",
     "@types/node": "^20.x",
     "@types/vscode": "^1.85.0",
     "@typescript-eslint/eslint-plugin": "^6.x",
     "@typescript-eslint/parser": "^6.x",
     "eslint": "^8.x",
     "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "axios": "^1.13.2"
   }
 }

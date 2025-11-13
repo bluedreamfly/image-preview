@@ -19,15 +19,19 @@ export class ImageHoverProvider implements vscode.HoverProvider {
         this.assetResolver = assetResolver;
     }
 
-    public provideHover(
+    public async provideHover(
         document: vscode.TextDocument,
         position: vscode.Position,
         token: vscode.CancellationToken
-    ): vscode.ProviderResult<vscode.Hover> {
+    ): Promise<vscode.Hover | null> {
         // 首先检查是否为资源标识符
         const assetRange = document.getWordRangeAtPosition(position, this.assetRegex);
         if (assetRange) {
             const assetId = document.getText(assetRange);
+
+            // 在显示 hover 前检查是否需要刷新资源映射
+            await this.assetResolver.checkAndRefreshIfNeeded();
+
             return this.createAssetHover(assetId, document);
         }
 
@@ -42,6 +46,9 @@ export class ImageHoverProvider implements vscode.HoverProvider {
             // 先检查是否为资源标识符
             const assetId = this.findAssetIdAtPosition(lineText, position.character);
             if (assetId) {
+                // 在显示 hover 前检查是否需要刷新资源映射
+                await this.assetResolver.checkAndRefreshIfNeeded();
+
                 return this.createAssetHover(assetId, document);
             }
 
